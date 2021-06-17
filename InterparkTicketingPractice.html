@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>INTERPARK TICKET RANDOM WORD 연습</title>
+<script>
+window.onload=function(){
+	var alphabet=['A','B','C','D','E','F','G','H','I','J','K','L','M',
+        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+	var k=0;
+	var o=0;
+	var x=0;
+	var startBtn=document.querySelector("#start");
+	var matchBtn=document.querySelector("#btn");
+	var m=document.querySelector("#m");
+	var input=document.querySelector("#answer");
+	input.addEventListener("keyup", function(event) {
+		  if (m.innerHTML.length!=6 && event.keyCode === 13) {
+		   event.preventDefault();
+		   document.querySelector("#start").click();
+		  }else if(event.keyCode === 13){
+			  event.preventDefault();
+			  document.querySelector("#btn").click();
+		  }
+	}); 
+	startBtn.onclick=function(){
+		var textrandom="";
+		for (var i=0;i<6;i++){
+			var j=Math.floor(Math.random()*26);
+			textrandom=textrandom+alphabet[j];
+		}
+		m.style.color='black';
+		m.innerHTML=textrandom;
+		
+		matchBtn.onclick=function(){
+			var answer=input.value;
+			if(answer.toUpperCase()=="STOP"){
+				m.innerHTML="프로그램 종료(STOP)";
+				k=0;
+				o=0;
+				x=0;
+				input.value='';
+			}else{
+				if(answer.toUpperCase()==textrandom){
+					o++;
+					m.style.color='blue';
+					m.innerHTML="정답(O)";
+					input.value='';
+				}else{
+					x++;
+					m.style.color='red';
+					m.innerHTML="오답(X)";
+					input.value='';
+				}
+			}
+			result1.innerHTML="총 문제 수 : "+Number(o+x)+"개";
+			result2.innerHTML="정답 : "+o+"개";
+			result3.innerHTML="오답 : "+x+"개";
+		}
+	}
+	startBtn.onmouseover=function(){
+		startBtn.value='Start';
+	}
+	startBtn.onmouseleave=function(){
+		startBtn.value='시작';
+	}
+	matchBtn.onmouseover=function(){
+		matchBtn.value='Check';
+	}
+	matchBtn.onmouseleave=function(){
+		matchBtn.value='정답확인';
+	}
+	
+}
+</script>
+<style>
+*{
+margin:0;
+padding:0;
+}
+#container{
+width:600px;
+margin:0px auto;
+margin-top:10px;
+text-align:center;
+}
+h1{
+text-align:center;
+margin-top: 50px;
+font-size: 60px;
+}
+p{
+font-size:15px;}
+#m{
+height:60px;
+font-weight:bold;
+font-size:60px;
+margin-bottom: 50px;
+}
+input[type=text]{
+height:30px;
+border:gray solid 1px;
+border-radius:8px;
+padding-left: 10px;
+}
+input[type=button]{
+border: solid 1px purple;
+width:80px;
+height:50px;
+border-radius:8px;
+background-color:white;
+cursor: pointer;}
+input[type=button]:hover{
+color:white;
+background-color:purple;
+}
+a{
+text-decoration: none;}
+a:hover{
+color:purple;}
+.siteName{
+font-size: 20px;}
+</style>
+</head>
+<body>
+
+
+<div id="container">
+<h1>안심예매 연습</h1>
+<p class='siteName'>- <a href='http://ticket.interpark.com/' target="_blank" title="move to ticket.interpark.com">Interpark</a> ver.</p>
+
+<p>
+<br>1. 입력창에 커서가 깜빡이면 엔터(시작 버튼)를 누른다.<br>
+2. 화면에 나타난 알파벳을 입력한 후 엔터(정답확인 버튼)를 누른다.<br>
+3. 정답/오답을 확인한 후 엔터(시작 버튼)를 누른다.<br>
+* 종료를 원하면 stop을 입력한다.<br></p>
+<p><br></p>
+
+<p id="m"></p> <!-- 문제 출력 -->
+<input id="answer" type="text" placeholder="입력" autofocus> <br><br>
+<input type="button" value="시작" id="start"> <input id="btn" type="button" value="정답확인">
+<p><br></p>
+<p id="result1">총 문제 수 :  개</p>
+<p id="result2">정답 :  개</p>
+<p id="result3">오답 :  개</p>
+
+</div>
+</body>
+</html>

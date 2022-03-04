@@ -4,18 +4,21 @@
 <meta charset="UTF-8">
 <title>INTERPARK TICKET RANDOM WORD 연습</title>
 <script>
-window.onload=function(){
-	var alphabet=['A','B','C','D','E','F','G','H','I','J','K','L','M',
+window.onload = function(){
+	var alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
         'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-	var k=0;
-	var o=0;
-	var x=0;
-	var startBtn=document.querySelector("#start");
-	var matchBtn=document.querySelector("#btn");
-	var m=document.querySelector("#m");
-	var input=document.querySelector("#answer");
+	var k = 0;
+	var o = 0;
+	var x = 0;
+	var startBtn = document.querySelector("#start");
+	var matchBtn = document.querySelector("#btn");
+	var m = document.querySelector("#m");
+	var input = document.querySelector("#answer");
+	var startTime = 0;
+	var endTime = 0;
+	var sec_gap = 0;
 	input.addEventListener("keyup", function(event) {
-		  if (m.innerHTML.length!=6 && event.keyCode === 13) {
+		  if (m.innerHTML.length != 6 && event.keyCode === 13) {
 		   event.preventDefault();
 		   document.querySelector("#start").click();
 		  }else if(event.keyCode === 13){
@@ -23,52 +26,56 @@ window.onload=function(){
 			  document.querySelector("#btn").click();
 		  }
 	}); 
-	startBtn.onclick=function(){
-		var textrandom="";
-		for (var i=0;i<6;i++){
-			var j=Math.floor(Math.random()*26);
-			textrandom=textrandom+alphabet[j];
+	startBtn.onclick = function(){
+		var textrandom = "";
+		for (var i = 0; i < 6; i++){
+			var j = Math.floor(Math.random()*26);
+			textrandom = textrandom + alphabet[j];
 		}
-		m.style.color='black';
-		m.innerHTML=textrandom;
+		m.style.color = 'black';
+		m.innerHTML = textrandom;
+		startTime = new Date().getTime();
 		
-		matchBtn.onclick=function(){
-			var answer=input.value;
-			if(answer.toUpperCase()=="STOP"){
-				m.innerHTML="프로그램 종료(STOP)";
-				k=0;
-				o=0;
-				x=0;
-				input.value='';
+		matchBtn.onclick = function(){
+			var answer = input.value;
+			if(answer.toUpperCase() == "STOP"){
+				m.innerHTML = "프로그램 종료(STOP)";
+				k = 0;
+				o = 0;
+				x = 0;
+				input.value = '';
 			}else{
-				if(answer.toUpperCase()==textrandom){
+				if(answer.toUpperCase() == textrandom){
 					o++;
-					m.style.color='blue';
-					m.innerHTML="정답(O)";
-					input.value='';
+					m.style.color = 'blue';
+					m.innerHTML = "정답(O)";
+					input.value = '';
 				}else{
 					x++;
-					m.style.color='red';
-					m.innerHTML="오답(X)";
-					input.value='';
+					m.style.color = 'red';
+					m.innerHTML = "오답(X)";
+					input.value = '';
 				}
+				endTime = new Date().getTime();
+				sec_gap = (endTime - startTime)/1000;
 			}
-			result1.innerHTML="총 문제 수 : "+Number(o+x)+"개";
-			result2.innerHTML="정답 : "+o+"개";
-			result3.innerHTML="오답 : "+x+"개";
+			result1.innerHTML = "총 문제 수 : "+Number(o+x)+"개";
+			result2.innerHTML = "정답 : "+o+"개";
+			result3.innerHTML = "오답 : "+x+"개";
+			result4.innerHTML = sec_gap+"초";
 		}
 	}
-	startBtn.onmouseover=function(){
-		startBtn.value='Start';
+	startBtn.onmouseover = function(){
+		startBtn.value = 'Start';
 	}
-	startBtn.onmouseleave=function(){
-		startBtn.value='시작';
+	startBtn.onmouseleave = function(){
+		startBtn.value = '시작';
 	}
-	matchBtn.onmouseover=function(){
-		matchBtn.value='Check';
+	matchBtn.onmouseover = function(){
+		matchBtn.value = 'Check';
 	}
-	matchBtn.onmouseleave=function(){
-		matchBtn.value='정답확인';
+	matchBtn.onmouseleave = function(){
+		matchBtn.value = '정답확인';
 	}
 	
 }
@@ -143,6 +150,7 @@ font-size: 20px;}
 <p id="result1">총 문제 수 :  개</p>
 <p id="result2">정답 :  개</p>
 <p id="result3">오답 :  개</p>
+<p id="result4"></p>
 
 </div>
 </body>
